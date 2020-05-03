@@ -1,0 +1,59 @@
+{
+  "name": "@react-client-auth/core",
+  "version": "1.0.0",
+  "description": "Pluggable client-side authentication for react",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "prepublishOnly": "yarn clean && yarn compile && yarn type-declarations",
+    "compile": "babel src -s --source-maps --extensions '.ts,.tsx' --ignore src/**/__tests__ --out-dir dist",
+    "test": "jest",
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write **/*.{ts,tsx}",
+    "ci": "yarn test && yarn type-check && yarn lint",
+    "lint": "eslint . --ext ts --ext tsx --ext js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erikdstock/react-client-auth.git"
+  },
+  "keywords": [
+    "react",
+    "authentication",
+    "auth0",
+    "typescript"
+  ],
+  "author": "Erik Stockmeier <erik.d.stock@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/erikdstock/react-client-auth/issues"
+  },
+  "homepage": "https://github.com/erikdstock/react-client-auth#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-transform-runtime": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/jest": "^25.2.1",
+    "@types/react": "^16.9.34",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "babel-jest": "^25.5.1",
+    "babel-plugin-add-react-displayname": "^0.0.5",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-react": "^7.19.0",
+    "jest": "^25.5.4",
+    "jest-watch-typeahead": "^0.5.0",
+    "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1"
+  }
+}
