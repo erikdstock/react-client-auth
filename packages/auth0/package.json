@@ -6,7 +6,7 @@
   },
   "typings": "dist/index.d.ts",
   "name": "@react-client-auth/auth0",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Auth0 service for react-client-auth",
   "scripts": {
     "clean": "rm -rf dist",
