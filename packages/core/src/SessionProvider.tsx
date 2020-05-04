@@ -29,11 +29,11 @@ export const SessionContext = React.createContext<Session>({
   },
 });
 
-interface AuthService<T = any, U = any, V = any, W = unknown> {
+interface AuthService<T = any, U = any, V = any> {
   authorize: (options?: T) => void;
   logout: (options?: U) => void;
   handleAuthentication: (options?: V) => Promise<User>;
-  checkSession: (options?: W) => Promise<User>;
+  reloadSession: () => Promise<User>;
 }
 
 /**
@@ -55,7 +55,7 @@ export const SessionProvider: React.FC<{ auth: AuthService }> = ({
 
   React.useEffect(() => {
     if (isBrowser) {
-      auth.checkSession().then((u) => {
+      auth.reloadSession().then((u) => {
         setUser(u);
       });
     } else {
