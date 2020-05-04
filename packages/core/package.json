@@ -6,7 +6,7 @@
   },
   "typings": "dist/index.d.ts",
   "name": "@react-client-auth/core",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Pluggable client-side authentication for react",
   "scripts": {
     "clean": "rm -rf dist",
