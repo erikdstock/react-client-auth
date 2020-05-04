@@ -1,18 +1,6 @@
 import Head from "next/head";
 import { useAuth, Session } from "@react-client-auth/core";
 
-const SessionButton: React.FC<{ session: Session }> = ({ session }) => {
-  return session.user.isLoggedIn ? (
-    <a onClick={() => session.auth.logout()}>
-      <code>Log Out</code>
-    </a>
-  ) : (
-    <a onClick={() => session.auth.authorize()}>
-      <code>Sign In</code>
-    </a>
-  );
-};
-
 export default function Home() {
   const session = useAuth();
   const { user } = session;

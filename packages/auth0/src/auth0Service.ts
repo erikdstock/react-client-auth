@@ -1,13 +1,11 @@
 import * as auth0 from "auth0-js";
-import {
-  AnonymousUser,
-  User,
-  LoggedInUser,
-  AuthTokens,
-} from "@react-client-auth/core";
+import { AnonymousUser, LoggedOutUser } from "@react-client-auth/core";
 
 import { config } from "./config";
 import { isBrowser } from "./environment";
+import { LoggedInAuth0User, AuthTokens } from "./user";
+
+type Auth0UserResult = LoggedInAuth0User | LoggedOutUser;
 
 export class Auth0Service {
   private client: auth0.WebAuth | undefined;
@@ -24,7 +22,7 @@ export class Auth0Service {
    * the user data and returns that in a promise
    * @returns {Promise<User>} a Promise with the current user
    */
-  public handleAuthentication = (): Promise<User> => {
+  public handleAuthentication = (): Promise<Auth0UserResult> => {
     return new Promise((resolve, reject) => {
       this.client
         ? this.client.parseHash((err, authResult) => {
@@ -44,7 +42,7 @@ export class Auth0Service {
    * Refresh the user's auth0 session (if their browser claims that they are logged in).
    * @returns {Promise<User>} a Promise with the current user
    */
-  public checkSession(): Promise<User> {
+  public reloadSession(): Promise<Auth0UserResult> {
     return new Promise((resolve, reject) => {
       this.client && this.isAuthenticated()
         ? this.client.checkSession({}, (err, authResult) => {
@@ -69,7 +67,9 @@ export class Auth0Service {
    * @param authResult The auth result
    * @returns {User}
    */
-  private userFromAuthResult(authResult: auth0.Auth0DecodedHash): User {
+  private userFromAuthResult(
+    authResult: auth0.Auth0DecodedHash
+  ): Auth0UserResult {
     if (!isBrowser) return AnonymousUser;
     if (
       !authResult ||
@@ -85,7 +85,7 @@ export class Auth0Service {
         idToken: authResult.idToken,
         expiresAt,
       };
-      const user: LoggedInUser = {
+      const user: LoggedInAuth0User = {
         isLoggedIn: true,
         profile: authResult.idTokenPayload,
         tokens: tokens,
