@@ -3,15 +3,20 @@ import { useAuth, Session } from "@react-client-auth/core";
 
 const SessionButton: React.FC<{ session: Session }> = ({ session }) => {
   return session.user.isLoggedIn ? (
-    <a onClick={() => session.auth.logout()}>Log Out</a>
+    <a onClick={() => session.auth.logout()}>
+      <code>Log Out</code>
+    </a>
   ) : (
-    <a onClick={() => session.auth.authorize()}>Sign In</a>
+    <a onClick={() => session.auth.authorize()}>
+      <code>Sign In</code>
+    </a>
   );
 };
 
 export default function Home() {
   const session = useAuth();
   const { user } = session;
+  if (!session.isLoading && user) debugger;
   return (
     <div className="container">
       <Head>
@@ -21,13 +26,21 @@ export default function Home() {
 
       <main>
         <h1 className="title">React Client Auth Demo</h1>
-        <pre>
+        <code>
           <a href="https://github.com/erikdstock/react-client-auth">
             Repository
           </a>
-        </pre>
+        </code>
 
-        <SessionButton session={session} />
+        {!session.isLoading && user.isLoggedIn ? (
+          <a onClick={() => session.auth.logout()}>
+            <code>Log Out</code>
+          </a>
+        ) : (
+          <a onClick={() => session.auth.authorize()}>
+            <code>Sign In</code>
+          </a>
+        )}
 
         <div className="grid">
           {user.isLoggedIn && (
@@ -42,12 +55,11 @@ export default function Home() {
 
       <footer>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://erikstockmeier.com"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+          Powered by @erikdstock
         </a>
       </footer>
 
@@ -90,8 +102,8 @@ export default function Home() {
         }
 
         a {
-          color: inherit;
           text-decoration: none;
+          cursor: pointer;
         }
 
         .title a {
